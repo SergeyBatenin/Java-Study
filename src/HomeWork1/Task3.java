@@ -32,21 +32,38 @@ public class Task3 {
 //        }
 //        return sb.toString().strip();
 
-        //Вариант 3, поздно заметил что split нельзя))
         StringBuilder sb = new StringBuilder();
-        String result = "";
-        s = s.trim(); // про trim ничего не сказано))
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c != ' ') {
-                sb.append(c);
-            } else if (sb.toString() != "") {
-                result = sb.toString() + " " + result;
-                sb.delete(0, sb.length());
-            }
-        }
+        //Вариант 3, поздно заметил что split нельзя))
+//        String result = "";
+//        s = s.trim(); // про trim ничего не сказано))
+//        for (int i = 0; i < s.length(); i++) {
+//            char c = s.charAt(i);
+//            if (c != ' ') {
+//                sb.append(c);
+//            } else if (sb.toString() != "") {
+//                result = sb.toString() + " " + result;
+//                sb.delete(0, sb.length());
+//            }
+//        }
+//        result = sb.toString() + " " + result;
+//        return result.trim();
 
-        result = sb.toString() + " " + result;
-        return result.trim();
+        //Вариант 4 в двумя указателями
+        int endWord = s.length() - 1;
+        while (endWord >= 0) {
+            if (s.charAt(endWord) == ' ') {
+                endWord--;
+                continue;
+            }
+            int startWord = endWord - 1;
+            while (startWord >= 0 && s.charAt(startWord) != ' ') {
+                startWord--;
+            }
+            sb.append(s.substring(startWord + 1, endWord + 1) + " ");
+            endWord = startWord - 1;
+        }
+        sb.delete(sb.length()- 1, sb.length());
+        return  sb.toString();
+
     }
 }
